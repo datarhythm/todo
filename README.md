@@ -7,12 +7,12 @@ Requires Python to be installed.
 
 # Syntax
 <ol>
-<il>h          - shows help screen</il>
-<il>a (task)   - adds a (task) to the list</il>
-<il>r #        - replaces the task with task ID #, and prompts for new task description</il>
-<il>d #        - deletes task ID and it's associated task description from the list.</il>
-<il>p          - prints current task list. First column is the task ID, second column is the task description (in red)</il>
-<il>exit       - to exit the program</il>
+  <il>h          - shows help screen</il>
+  <il>a (task)   - adds a (task) to the list</il>
+  <il>r #        - replaces the task with task ID #, and prompts for new task description</il>
+  <il>d #        - deletes task ID and it's associated task description from the list.</il>
+  <il>p          - prints current task list. First column is the task ID, second column is the task description (in red)</il>
+  <il>exit       - to exit the program</il>
 </ol>
 
 
