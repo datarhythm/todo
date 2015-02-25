@@ -9,7 +9,7 @@ import os
 # Create two empty lists
 todo = [] #All todo's
 task = [] #Use for interpreting user input
-
+location = './tasks.cfg'
 # Class for changing text colors
 class bcolors:
     PURPLE = '\033[95m'
@@ -22,8 +22,8 @@ class bcolors:
     UNDERLINE = '\033[4m'
 
 # If existing config file exists, import it in, else it's blank
-if os.path.exists('./tasks.cfg') == True:
-    tasks_file = open('./tasks.cfg', 'rb')
+if os.path.exists(location) == True:
+    tasks_file = open(location, 'rb')
     todo = pickle.load(tasks_file)
     tasks_file.close()
 
@@ -75,17 +75,19 @@ while exit == False:
         print_todo()
     elif task == "c":
         clear_window()
+        print_todo()
         print "Commiting to disk..."
-        output = open('./tasks.cfg', 'wb')
+        output = open(location, 'wb')
         pickle.dump(todo, output)
         output.close()
         print "Committed."
+        
     elif task == "exit":
         exit = True
         clear_window()
         print "Saving tasks..."
         #If exiting, commit the todo list to disk
-        output = open('./tasks.cfg', 'wb')
+        output = open(location, 'wb')
         pickle.dump(todo, output)
         output.close()
         
