@@ -15,6 +15,8 @@ r #        - replaces the task with task ID #, and prompts for new task descript
 
 d #        - deletes task ID and it's associated task description from the list.
 
+c          - Commits the todo list, and all it's recent changes, to tasks.cfg file
+
 p          - prints current task list. First column is the task ID, second column is the task description (in red)
 
 exit       - to exit the program
