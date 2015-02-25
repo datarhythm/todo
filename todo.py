@@ -10,13 +10,13 @@ import os
 todo = [] #All todo's
 task = [] #Use for interpreting user input
 
-# Class for changing text colors, set to FAIL by default.
+# Class for changing text colors
 class bcolors:
-    HEADER = '\033[95m'
-    OKBLUE = '\033[94m'
-    OKGREEN = '\033[92m'
-    WARNING = '\033[93m'
-    FAIL = '\033[91m'
+    PURPLE = '\033[95m'
+    BLUE = '\033[94m'
+    GREEN = '\033[92m'
+    YELLOW = '\033[93m'
+    RED = '\033[91m'
     ENDC = '\033[0m'
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
@@ -32,7 +32,7 @@ def print_todo():
     print "Current Tasks"
     print "------------------"
     for i in range(len(todo)):
-        print i, bcolors.FAIL + todo[i] + bcolors.ENDC
+        print i, bcolors.RED + todo[i] + bcolors.ENDC
 
 # function that clears the terminal screen's window
 def clear_window():
