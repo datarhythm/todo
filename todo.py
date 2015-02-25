@@ -9,7 +9,10 @@ import os
 # Create two empty lists
 todo = [] #All todo's
 task = [] #Use for interpreting user input
+
+#Set location of where task.cfg should live/lives
 location = './tasks.cfg'
+
 # Class for changing text colors
 class bcolors:
     PURPLE = '\033[95m'
