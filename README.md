@@ -9,13 +9,13 @@ Requires Python to be installed.
 
 h          - shows help screen
 
-a (task)   - adds a (task) to the list
+c (task)   - creates a (task) to the list
 
 r #        - replaces the task with task ID #, and prompts for new task description
 
 d #        - deletes task ID and it's associated task description from the list.
 
-c          - Commits the todo list, and all it's recent changes, to tasks.cfg file
+m #        - Moves the task ID to another task ID
 
 p          - prints current task list. First column is the task ID, second column is the task description (in red)
 
