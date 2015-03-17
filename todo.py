@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #Author : Ryan Clair
-#Verion : 1.0
+#Verion : 1.2
 
 import pickle
 import os.path
@@ -30,17 +30,28 @@ if os.path.exists(location) == True:
     todo = pickle.load(tasks_file)
     tasks_file.close()
 
+# function that commits changes to the to-do list to disk
+def write_disk():
+    output = open(location, 'wb')
+    pickle.dump(todo, output)
+    output.close()
+    
 # Print header + all the tasks in the todo list
 def print_todo():
     print "Current Tasks"
     print "------------------"
     for i in range(len(todo)):
-        print i, bcolors.RED + todo[i] + bcolors.ENDC
+        print i + 1, bcolors.RED + todo[i] + bcolors.ENDC
 
 # function that clears the terminal screen's window
 def clear_window():
     os.system('cls' if os.name == 'nt' else 'clear')
 
+# function that does the default set of actions after a change
+def default_action():
+    write_disk()
+    clear_window()
+    print_todo()
 # Clear the window
 clear_window()
 
@@ -54,54 +65,54 @@ while exit == False:
     task = raw_input("Input:> ")
     action = task[:1] #Set Action the first character of input
     item = task[2:] #Set task description as 'item'
-    if action == "d":
-        iitem = int(item)
-        for x in range(len(todo)):
-            if x == iitem:
-                todo.remove(todo[x]) #If removing, remove the task
-        clear_window()
-        print_todo()
-    elif action == "a":
-        todo.append(item) # If adding, add the task
-        clear_window()
-        print_todo()
-    elif action == "p":
-        clear_window()
-        print_todo() # If printing, print all the tasks
-    elif action == "r":
-        iitem = int(item)
-        #If replacing a task, search for the task number as it relates to the position in the todo list
-        for x in range (len(todo)):
-            if x == iitem: 
-                todo[x] = raw_input("Replace with: ") # Then prompt user with what to replace it with, and put it into the list
-        clear_window()
-        print_todo()
-    elif task == "c":
-        clear_window()
-        print_todo()
-        print "Commiting to disk..."
-        output = open(location, 'wb')
-        pickle.dump(todo, output)
-        output.close()
-        print "Committed."
-        
-    elif task == "exit":
+    
+    if task == "exit":
         exit = True
         clear_window()
         print "Saving tasks..."
         #If exiting, commit the todo list to disk
-        output = open(location, 'wb')
-        pickle.dump(todo, output)
-        output.close()
+        write_disk() 
         
         print "Saved, exiting."
+        
+    elif action == "d":
+        iitem = int(item) - 1
+        for x in range(len(todo)):
+            if x == iitem:
+                todo.remove(todo[x]) #If removing, remove the task
+        default_action()
+    elif action == "c":
+        todo.append(item) # If creating a task, add the task
+        default_action()
+    elif action == "p":
+        clear_window()
+        print_todo() # If printing, print all the tasks
+    elif action == "r":
+        iitem = int(item) - 1
+        #If replacing a task, search for the task number as it relates to the position in the todo list
+        for x in range (len(todo)):
+            if x == iitem: 
+                todo[x] = raw_input("Replace with: ") # Then prompt user with what to replace it with, and put it into the list
+        default_action()
+    elif action == "m": #If user wants to move the task, ask for the new order number for said task and shift all other tasks after it up.
+        iitem = int(item) - 1
+        ntask = int(raw_input("New Task Number:>")) - 1
+        #Check to see if user didn't change the task number or that the number is invalid, otherwise commit changes
+        if iitem == ntask or ntask < 0:
+            default_action()
+            continue
+        else: 
+            old = todo.pop(iitem) #remove the task from the array and store into memory
+            todo.insert(ntask, old) #insert the task back into the array 
+            default_action()
+        
     elif task == "h": #If asking for help, print instructions
         print "h          - shows this screen"
-        print "a (task)   - adds a (task) to the list"
+        print "c (task)   - creates a (task) to the list"
         print "r #        - replaces task with number #, and prompts for new task description"
         print "d #        - deletes task number from the list. See 'p' for task number"
+        print "m #        - moves task # to a new task #"
         print "p          - prints current task list. First column is the task number, second column is the task description"
-        print "c          - Commits the todo list, and all it's recent changes, to tasks.cfg file"
         print "exit       - to exit the program"
     else:
         print "Invalid command. Type \"h\" for help" #all else, tell them to check help
